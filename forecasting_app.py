@@ -219,8 +219,13 @@ def main():
                 st.success("File uploaded successfully.")
         elif data_source == "Use Example Data":
             st.info("Using example data: AEP_hourly.csv")
-            df = pd.read_csv("AEP_hourly.csv")
-            st.success("Example data loaded successfully.")
+            if st.button("Load Example Data"):
+                try:
+                    df = pd.read_csv("AEP_hourly.csv")
+                    st.session_state.df = df
+                    st.success("Example data loaded successfully.")
+                except Exception as e:
+                    st.error(f"Failed to load example data: {e}")
         elif data_source == "Yahoo Finance":
             st.info("Using Yahoo Finance data. Please enter the stock ticker and date range.")
             ticker = st.text_input("Stock Ticker (e.g., AAPL)", "AAPL")
